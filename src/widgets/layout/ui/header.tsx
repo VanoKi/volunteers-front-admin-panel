@@ -1,9 +1,8 @@
-import { FC } from 'react';
+import {FC} from 'react';
 
-import { useLogout } from '@/entities/auth';
-import { LanguageSwitcher } from '@/features/language-switcher/ui';
-import { useI18n } from '@/shared/lib/i18n';
-import { Button } from '@/shared/ui';
+import {useLogout} from '@/entities/auth';
+import {LanguageSwitcher} from '@/features/language-switcher/ui';
+import {useI18n} from '@/shared/lib/i18n';
 
 interface HeaderProps {
   onToggleSidebar?: () => void;
@@ -48,15 +47,14 @@ export const Header: FC<HeaderProps> = ({ onToggleSidebar }) => {
           </h1>
           <LanguageSwitcher />
         </div>
-        <Button
-          variant="ghost"
-          size="sm"
+        <button
           onClick={handleLogout}
           disabled={logoutMutation.isPending}
-          className="text-xs sm:text-sm"
+          className="text-xs sm:text-sm p-1 rounded-lg border-2  border-[#002640] shadow-[1px_1px_0_0_#002640,3px_3px_0_0_#002640]
+          transition-all duration-150 active:translate-x-[3px] active:translate-y-[3px] active:shadow-none font-medium mb-1"
         >
           {logoutMutation.isPending ? t('auth.logoutPending') : t('auth.logout')}
-        </Button>
+        </button>
       </div>
     </header>
   );
