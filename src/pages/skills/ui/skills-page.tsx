@@ -47,7 +47,7 @@ export const SkillsPage: FC = () => {
 
   return (
     <Layout>
-      <div className="p-4 sm:p-6">
+      <div className="p-2 md:p-6">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold text-gray-900">
             {t('skills.title')}
@@ -94,16 +94,16 @@ export const SkillsPage: FC = () => {
               <Table>
                 <thead>
                   <tr className="bg-gray-50">
-                    <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-2 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       {t('skills.columns.icon')}
                     </th>
-                    <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-2 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       {t('skills.columns.name')}
                     </th>
-                    <th className="hidden sm:table-cell px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="hidden md:table-cell px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       {t('skills.columns.category')}
                     </th>
-                    <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-2 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       {t('skills.columns.actions')}
                     </th>
                   </tr>
@@ -112,25 +112,26 @@ export const SkillsPage: FC = () => {
                   {paginatedSkills.map((skill) => {
 
                     return <tr key={skill.id} className="hover:bg-gray-50">
-                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                      <td className="px-2 md:px-6 py-2 whitespace-nowrap">
                         <SvgPreview svgCode={skill.iconSvg} size={40} emojiSize={24}/>
                       </td>
-                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                      <td className="px-2 md:px-6 py-2 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900">
                           {skill.name}
                         </div>
                       </td>
-                      <td className="hidden sm:table-cell px-4 sm:px-6 py-4 whitespace-nowrap">
+                      <td className="hidden md:table-cell px-2 sm:px-6 py-2 whitespace-nowrap">
                         <div className="text-sm text-gray-500">
                           {skill.category?.name || '-'}
                         </div>
                       </td>
-                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                      <td className="px-2 md:px-6 py-2 whitespace-nowrap text-sm font-medium">
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-1 sm:gap-2">
                           <Button
                             variant="outline"
                             size="sm"
                             onClick={() => setEditingSkill(skill)}
+                            className={'w-full sm:w-auto'}
                           >
                             {t('common.edit')}
                           </Button>
@@ -138,6 +139,7 @@ export const SkillsPage: FC = () => {
                             skillId={skill.id}
                             skillName={skill.name}
                             onSuccess={handleDeleteSuccess}
+                            // className={'w-full sm:w-auto'}
                           />
                         </div>
                       </td>

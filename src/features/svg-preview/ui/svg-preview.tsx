@@ -21,7 +21,7 @@ export const SvgPreview: FC<SvgPreviewProps> = ({
     return (
       <div
         className={cn(
-          'flex items-center justify-center border-gray-300 rounded bg-[#ebf7ff] select-none overflow-hidden',
+          'flex items-center justify-center border-gray-300 rounded bg-[#ebf7ff] select-none overflow-hidden br-8px',
           className,
         )}
         style={{
