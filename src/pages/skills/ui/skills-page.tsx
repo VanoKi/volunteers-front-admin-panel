@@ -126,7 +126,7 @@ export const SkillsPage: FC = () => {
                         </div>
                       </td>
                       <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                           <Button
                             variant="outline"
                             size="sm"
