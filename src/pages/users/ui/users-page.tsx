@@ -1,15 +1,15 @@
-import { FC, useState, useEffect } from 'react';
+import {FC, useEffect, useState} from 'react';
 
-import { useUsersPaginated } from '@/entities/user';
-import { useI18n } from '@/shared/lib/i18n';
-import { Badge, Button, Card, Modal, Pagination, Select, Table, Input } from '@/shared/ui';
-import { Layout } from '@/widgets/layout';
-import { CreateNeedyForm } from '@/features/needy-create';
-import { CreateVolunteerForm } from '@/features/volunteer-create';
-import { InviteNeedyButton } from '@/features/needy-invite-link';
-import { AssignProgramsButton } from '@/features/volunteer-assign-programs';
-import { UserDetailsModal } from '@/features/user-details';
-import type { User, UserRole, UserStatus } from '@/entities/user';
+import type {User, UserRole, UserStatus} from '@/entities/user';
+import {useUsersPaginated} from '@/entities/user';
+import {useI18n} from '@/shared/lib/i18n';
+import {Badge, Input, Modal, Pagination, Select, Table} from '@/shared/ui';
+import {Layout} from '@/widgets/layout';
+import {CreateNeedyForm} from '@/features/needy-create';
+import {CreateVolunteerForm} from '@/features/volunteer-create';
+import {InviteNeedyButton} from '@/features/needy-invite-link';
+import {AssignProgramsButton} from '@/features/volunteer-assign-programs';
+import {UserDetailsModal} from '@/features/user-details';
 
 const SEARCH_DEBOUNCE_MS = 300;
 
@@ -107,78 +107,82 @@ export const UsersPage: FC = () => {
         <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
           {t('users.title')}
         </h1>
-
-        {/* Фильтры и действия — адаптивная сетка */}
-        <div className="mb-4 sm:mb-6 space-y-4">
-          {/* Мобилка: карточка с фильтрами для лучшего визуального выделения */}
-          <div className="rounded-lg border border-gray-200 bg-gray-50/50 p-4 sm:bg-transparent sm:border-0 sm:p-0">
-            <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:gap-3">
-              <Input
-                placeholder={t('users.searchPlaceholder')}
-                value={searchInput}
-                onChange={(e) => {
-                  setSearchInput(e.target.value);
-                  setPage(1);
-                }}
-                className="w-full sm:w-52 min-w-0"
-              />
-              <div className="grid grid-cols-2 gap-3 sm:flex sm:grid-cols-none sm:gap-2">
-                <Select
-                  label={t('users.filters.status')}
-                  options={STATUS_FILTER_OPTIONS.map((opt) => ({
-                    value: opt.value,
-                    label: t(opt.labelKey),
-                  }))}
-                  value={statusFilter}
-                  onChange={(e) => {
-                    setStatusFilter(e.target.value as StatusFilterValue);
-                    setPage(1);
-                  }}
-                  className="w-full min-w-0"
-                />
-                <Select
-                  label={t('users.filters.role')}
-                  options={ROLE_FILTER_OPTIONS.map((opt) => ({
-                    value: opt.value,
-                    label: t(opt.labelKey),
-                  }))}
-                  value={roleFilter}
-                  onChange={(e) => {
-                    setRoleFilter(e.target.value as RoleFilterValue);
-                    setPage(1);
-                  }}
-                  className="w-full min-w-0"
-                />
+          <div className="mb-4 sm:mb-6 space-y-4">
+              {/* Мобилка: карточка с фильтрами */}
+              <div className="p-4 sm:p-0 bg-white sm:bg-transparent border border-[#e5e5e5] sm:border-0 shadow-[1px_1px_0_0_#e5e5e5,3px_3px_0_0_#e5e5e5] sm:shadow-none rounded-2xl sm:rounded-none mb-4 sm:mb-0">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
+                      <div className="w-full sm:w-56 shrink-0">
+                          <Input
+                              placeholder={t('users.searchPlaceholder')}
+                              value={searchInput}
+                              onChange={(e) => {
+                                  setSearchInput(e.target.value);
+                                  setPage(1);
+                              }}
+                              className="w-full min-h-[44px] rounded-xl sm:min-h-[40px]"
+                          />
+                      </div>
+                      <div className="flex gap-3 w-full sm:w-auto sm:gap-2 pt-2 sm:pt-0 border-t border-gray-100 sm:border-0 mt-2 sm:mt-0">
+                          <div className="w-1/2 sm:w-40 relative z-[10]">
+                              <Select
+                                  label={t('users.filters.status')}
+                                  options={STATUS_FILTER_OPTIONS.map((opt) => ({
+                                      value: opt.value,
+                                      label: t(opt.labelKey),
+                                  }))}
+                                  value={statusFilter}
+                                  onChange={(e) => {
+                                      setStatusFilter(e.target.value as StatusFilterValue);
+                                      setPage(1);
+                                  }}
+                                  className="w-full min-h-[44px] rounded-xl sm:min-h-[40px]"
+                              />
+                          </div>
+                          <div className="w-1/2 sm:w-40 relative z-[10]">
+                              <Select
+                                  label={t('users.filters.role')}
+                                  options={ROLE_FILTER_OPTIONS.map((opt) => ({
+                                      value: opt.value,
+                                      label: t(opt.labelKey),
+                                  }))}
+                                  value={roleFilter}
+                                  onChange={(e) => {
+                                      setRoleFilter(e.target.value as RoleFilterValue);
+                                      setPage(1);
+                                  }}
+                                  className="w-full min-h-[44px] rounded-xl sm:min-h-[40px]"
+                              />
+                          </div>
+                      </div>
+                  </div>
               </div>
-            </div>
-          </div>
 
           {/* Кнопки действий */}
           <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-2">
             <div className="w-full sm:w-auto [&>button]:w-full sm:[&>button]:w-auto">
               <InviteNeedyButton />
             </div>
-            <Button
-              onClick={handleExportClick}
-              className="w-full sm:w-auto min-h-[44px] sm:min-h-0 shrink-0"
-              variant="outline"
-              disabled={isExporting}
-            >
-              {isExporting ? t('users.exporting') : t('users.export')}
-            </Button>
-            <Button
-              onClick={() => setIsCreateVolunteerModalOpen(true)}
-              className="w-full sm:w-auto min-h-[44px] sm:min-h-0 shrink-0"
-              variant="outline"
-            >
-              {t('users.addVolunteer')}
-            </Button>
-            <Button
-              onClick={() => setIsCreateModalOpen(true)}
-              className="w-full sm:w-auto min-h-[44px] sm:min-h-0 shrink-0"
-            >
-              {t('users.addNeedy')}
-            </Button>
+              <button
+                  onClick={handleExportClick}
+                  className="w-full h-[44px] px-4 rounded-xl sm:w-auto min-h-[44px] sm:min-h-0 shrink-0 border-2 border-[#004573] shadow-[1px_1px_0_0_#004573,3px_3px_0_0_#004573] transition-all duration-150 active:translate-x-[3px] active:translate-y-[3px] active:shadow-none"
+                  disabled={isExporting}
+              >
+                  {isExporting ? t('users.exporting') : t('users.export')}
+              </button>
+
+              <button
+                  onClick={() => setIsCreateVolunteerModalOpen(true)}
+                  className="w-full h-[44px] px-4 rounded-xl sm:w-auto min-h-[44px] sm:min-h-0 shrink-0 border-2 border-[#004573] shadow-[1px_1px_0_0_#004573,3px_3px_0_0_#004573] transition-all duration-150 active:translate-x-[3px] active:translate-y-[3px] active:shadow-none"
+              >
+                  {t('users.addVolunteer')}
+              </button>
+
+              <button
+                  onClick={() => setIsCreateModalOpen(true)}
+                  className="w-full h-[44px] px-4 rounded-xl sm:w-auto min-h-[44px] sm:min-h-0 shrink-0 border-2 border-[#004573] shadow-[1px_1px_0_0_#004573,3px_3px_0_0_#004573] transition-all duration-150 active:translate-x-[3px] active:translate-y-[3px] active:shadow-none"
+              >
+                  {t('users.addNeedy')}
+              </button>
           </div>
         </div>
 
@@ -217,11 +221,11 @@ export const UsersPage: FC = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="bg-white">
                   {users.map((user: User) => (
-                    <tr key={user.id} className="hover:bg-gray-50">
+                      <tr key={user.id} className="hover:bg-gray-50 ring-1 ring-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">
+                        <div className="text-sm font-bold text-gray-900">
                           {`${user.firstName ?? ''} ${user.lastName ?? ''}`.trim() ||
                             user.email ||
                             user.phone ||
@@ -250,13 +254,12 @@ export const UsersPage: FC = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-2">
-                          <Button
-                            variant="primary"
-                            size="sm"
+                          <button
+                            className={"w-full h-[30px] px-4 rounded-lg sm:w-auto min-h-[44px] sm:min-h-0 shrink-0 border-2 border-[#004573] shadow-[1px_1px_0_0_#004573,3px_3px_0_0_#004573] transition-all duration-150 active:translate-x-[3px] active:translate-y-[3px] active:shadow-none"}
                             onClick={() => setSelectedUserId(user.id)}
                           >
                             {t('users.actions.viewDetails')}
-                          </Button>
+                          </button>
                           {user.role === 'volunteer' && (
                             <AssignProgramsButton
                               volunteerId={user.id}
@@ -271,54 +274,63 @@ export const UsersPage: FC = () => {
               </Table>
             </div>
 
-            {/* Mobile Card View */}
-            <div className="md:hidden space-y-3">
-              {users.map((user: User) => (
-                <Card key={user.id} className="p-4 shadow-sm border border-gray-100">
-                  <div className="space-y-2">
-                    <div>
-                      <h3 className="text-sm font-semibold text-gray-900">
-                        {`${user.firstName ?? ''} ${user.lastName ?? ''}`.trim() ||
-                          user.email ||
-                          user.phone ||
-                          '-'}
-                      </h3>
-                      {(user.email || user.phone) && (
-                        <p className="text-xs text-gray-500 mt-1">
-                          {user.email || user.phone}
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-xs text-gray-500">
-                        {t(getRoleKey(user.role))}
-                      </span>
-                      <Badge variant={getStatusVariant(user.status)}>
-                        {t(getStatusKey(user.status))}
-                      </Badge>
-                    </div>
-                    <div className="mt-3 pt-2 border-t border-gray-100 flex flex-wrap gap-2">
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => setSelectedUserId(user.id)}
-                        className="min-h-[40px] flex-1 sm:flex-initial"
+              {/* Mobile Card View */}
+              <div className="md:hidden flex flex-col gap-2">
+                  {users.map((user: User) => (
+                      <div
+                          key={user.id}
+                          className="p-4 border-[#e5e5e5] shadow-[1px_1px_0_0_#e5e5e5,3px_3px_0_0_#e5e5e5] rounded-xl bg-white flex flex-col items-center text-center"
                       >
-                        {t('users.actions.viewDetails')}
-                      </Button>
-                      {user.role === 'volunteer' && (
-                        <AssignProgramsButton
-                          volunteerId={user.id}
-                          onSuccess={handleCreateSuccess}
-                        />
-                      )}
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
+                          <div className="flex flex-col w-full items-center">
+                              <h3 className="text-[22px] leading-tight font-semibold text-[#1A1A1A] truncate w-full mb-1">
+                                  {`${user.firstName ?? ''} ${user.lastName ?? ''}`.trim() ||
+                                      user.email ||
+                                      user.phone ||
+                                      '-'}
+                              </h3>
 
-            {totalPages > 1 && (
+                              {(user.email || user.phone) && (
+                                  <p className="text-[14px] text-gray-500 truncate w-full mb-3">
+                                      {user.email || user.phone}
+                                  </p>
+                              )}
+                              <div className="flex justify-center items-center gap-2 flex-wrap">
+                                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-gray-50 text-sm font-medium text-gray-600 border border-gray-200">
+            {t(getRoleKey(user.role))}
+                                  </span>
+
+                                  <Badge
+                                      variant={getStatusVariant(user.status)}
+                                      className="px-3 py-1 rounded-full text-sm font-medium"
+                                  >
+                                      {t(getStatusKey(user.status))}
+                                  </Badge>
+                              </div>
+                          </div>
+                          <div className="w-16 h-px bg-gray-100 my-2" />
+                          <div className="mt-2 w-full flex flex-col items-center gap-3">
+                              <button
+                                  onClick={() => setSelectedUserId(user.id)}
+                                  className="w-[180px] h-[44px] px-4 rounded-xl sm:w-auto min-h-[44px] sm:min-h-0 shrink-0 border-2 border-[#004573] shadow-[1px_1px_0_0_#004573,3px_3px_0_0_#004573] transition-all duration-150 active:translate-x-[3px] active:translate-y-[3px] active:shadow-none"
+                              >
+                                  {t('users.actions.viewDetails')}
+                              </button>
+
+                              {user.role === 'volunteer' && (
+                                  <div className="w-full [&>button]:w-full [&>button]:min-h-[48px] [&>button]:rounded-xl [&>button]:justify-center [&>button]:text-base [&>button]:font-medium">
+                                      <AssignProgramsButton
+                                          volunteerId={user.id}
+                                          onSuccess={handleCreateSuccess}
+                                      />
+                                  </div>
+                              )}
+                          </div>
+                      </div>
+                  ))}
+              </div>
+
+
+              {totalPages > 1 && (
               <div className="mt-4 sm:mt-6 flex justify-center">
                 <Pagination
                   currentPage={page}
