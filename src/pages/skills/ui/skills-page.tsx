@@ -139,7 +139,6 @@ export const SkillsPage: FC = () => {
                             skillId={skill.id}
                             skillName={skill.name}
                             onSuccess={handleDeleteSuccess}
-                            // className={'w-full sm:w-auto'}
                           />
                         </div>
                       </td>
