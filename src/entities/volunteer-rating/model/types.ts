@@ -28,6 +28,6 @@ export interface VolunteerRatingsAdminResponse {
 export interface VolunteerRating {
   id: string;
   score: number;
-  comment?: string;
+  comment?: string | null | undefined;
   createdAt: string;
 }

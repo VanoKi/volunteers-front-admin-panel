@@ -1,8 +1,9 @@
-import { FC, useEffect, useState } from 'react';
-import { useI18n } from '@/shared/lib/i18n';
-import { Layout } from '@/widgets/layout';
-import { Input, Table, Pagination, Card, Badge } from '@/shared/ui';
-import { useVolunteerRatingsAdmin } from '@/entities/volunteer-rating';
+import {FC, useEffect, useState} from 'react';
+import {useI18n} from '@/shared/lib/i18n';
+import {Layout} from '@/widgets/layout';
+import {Badge, Input, Pagination, Table} from '@/shared/ui';
+import {useVolunteerRatingsAdmin} from '@/entities/volunteer-rating';
+import {cn} from "@/shared/lib/utils";
 
 const SEARCH_DEBOUNCE_MS = 300;
 
@@ -78,9 +79,9 @@ export const ReviewsPage: FC = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white ring-1 ring-gray-50">
                   {items.map((rating) => (
-                    <tr key={rating.id} className="hover:bg-gray-50">
+                      <tr key={rating.id} className="hover:bg-gray-50 ring-1 ring-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900">
                           {`${rating.volunteerFirstName ?? ''} ${rating.volunteerLastName ?? ''}`.trim() ||
@@ -112,7 +113,7 @@ export const ReviewsPage: FC = () => {
                               </span>
                             ))}
                           </div>
-                          <span className="text-sm text-gray-700">{rating.score}</span>
+                          <span className="text-sm">({rating.score})</span>
                         </div>
                       </td>
                       <td className="px-6 py-4">
@@ -134,46 +135,58 @@ export const ReviewsPage: FC = () => {
               </Table>
             </div>
 
-            <div className="md:hidden space-y-3">
-              {items.map((rating) => (
-                <Card key={rating.id} className="p-4 shadow-sm border border-gray-100">
-                  <div className="space-y-2">
-                    <div>
-                      <h3 className="text-sm font-semibold text-gray-900">
-                        {`${rating.volunteerFirstName ?? ''} ${rating.volunteerLastName ?? ''}`.trim() ||
-                          rating.volunteerEmail ||
-                          rating.volunteerPhone ||
-                          rating.volunteerUserId}
-                      </h3>
-                      <p className="text-xs text-gray-500 mt-1">
-                        ID: {rating.volunteerUserId}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="flex gap-0.5">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <span
-                            key={star}
-                            className={star <= rating.score ? 'text-yellow-500' : 'text-gray-300'}
-                          >
-                            ★
-                          </span>
-                        ))}
+              <div className="md:hidden flex flex-col gap-3">
+                  {items.map((rating) => (
+                      <div
+                          key={rating.id}
+                          className="p-5 border-[#e5e5e5] shadow-[1px_1px_0_0_#e5e5e5,3px_3px_0_0_#e5e5e5] rounded-2xl bg-white flex flex-col items-center text-center"
+                      >
+                          <div className="flex flex-col w-full mb-2">
+                              <h3 className="text-lg font-bold text-[#1A1A1A] truncate w-full">
+                                  {`${rating.volunteerFirstName ?? ''} ${rating.volunteerLastName ?? ''}`.trim() ||
+                                      rating.volunteerEmail ||
+                                      rating.volunteerPhone ||
+                                      'Volunteer'}
+                              </h3>
+                              <p className="text-[12px] text-gray-400 mt-0.5 font-medium">
+                                  ID: {rating.volunteerUserId}
+                              </p>
+                          </div>
+                          <div className="flex flex-col items-center gap-2 mb-3">
+                              <div className="flex gap-1">
+                                  {[1, 2, 3, 4, 5].map((star) => (
+                                      <span
+                                          key={star}
+                                          className={cn(
+                                              "text-xl",
+                                              star <= rating.score ? 'text-yellow-400' : 'text-gray-200'
+                                          )}
+                                      >
+                                            ★
+                                      </span>
+                                  ))}
+                                  <div className={"mt-1 text-sm"}>({rating.score})</div>
+                              </div>
+                              <span className="text-[11px] px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 border border-gray-100">
+                                 {new Date(rating.createdAt).toLocaleDateString()}
+                              </span>
+                          </div>
+
+                          {rating.comment && (
+                              <div className="w-full bg-gray-50/50 rounded-xl p-3 mb-3 border border-gray-100 italic">
+                                  <p className="text-sm text-gray-700 leading-relaxed italic">
+                                      "{rating.comment}"
+                                  </p>
+                              </div>
+                          )}
+                          <div className="w-full pt-3 border-t border-gray-100 flex justify-center">
+        <span className="text-[12px] font-medium text-gray-400">
+          {t('reviews.columns.task')}: <span className="text-gray-600">{rating.taskId}</span>
+        </span>
+                          </div>
                       </div>
-                      <span className="text-xs text-gray-500">
-                        {new Date(rating.createdAt).toLocaleDateString()}
-                      </span>
-                    </div>
-                    {rating.comment && (
-                      <p className="text-sm text-gray-700 mt-1">{rating.comment}</p>
-                    )}
-                    <div className="pt-2 border-t border-gray-100 flex flex-wrap gap-2 text-xs text-gray-500">
-                      <span>{t('reviews.columns.task')}: {rating.taskId}</span>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
+                  ))}
+              </div>
 
             {totalPages > 1 && (
               <div className="mt-4 sm:mt-6 flex justify-center">
