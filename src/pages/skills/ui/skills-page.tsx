@@ -113,7 +113,7 @@ export const SkillsPage: FC = () => {
 
                     return <tr key={skill.id} className="hover:bg-gray-50">
                       <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
-                        <SvgPreview svgCode={skill.iconSvg} size={32} />
+                        <SvgPreview svgCode={skill.iconSvg} size={40} emojiSize={24}/>
                       </td>
                       <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900">
