@@ -52,7 +52,7 @@ export const SkillsPage: FC = () => {
           <h1 className="text-2xl font-bold text-gray-900">
             {t('skills.title')}
           </h1>
-          <Button onClick={() => setIsCreateModalOpen(true)}>
+          <Button onClick={() => setIsCreateModalOpen(true)} variant={"animate"}>
             {t('skills.create')}
           </Button>
         </div>
@@ -84,7 +84,7 @@ export const SkillsPage: FC = () => {
                 ? t('skills.emptyFiltered')
                 : t('skills.empty')}
             </p>
-            <Button onClick={() => setIsCreateModalOpen(true)}>
+            <Button onClick={() => setIsCreateModalOpen(true)} variant={"animate"}>
               {t('skills.createFirst')}
             </Button>
           </div>
@@ -128,7 +128,7 @@ export const SkillsPage: FC = () => {
                       <td className="px-2 md:px-6 py-2 whitespace-nowrap text-sm font-medium">
                         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-1 sm:gap-2">
                           <Button
-                            variant="outline"
+                            variant={"animate"}
                             size="sm"
                             onClick={() => setEditingSkill(skill)}
                             className={'w-full sm:w-auto'}

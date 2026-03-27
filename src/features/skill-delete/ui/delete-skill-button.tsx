@@ -33,11 +33,11 @@ export const DeleteSkillButton: FC<DeleteSkillButtonProps> = ({
   return (
     <>
       <Button
-        variant="outline"
+        variant={"animate"}
         size="sm"
         onClick={() => setIsOpen(true)}
         disabled={deleteMutation.isPending}
-        className="text-red-600 hover:text-red-700 hover:border-red-700"
+        className="text-red-600 hover:text-red-700 hover:border-red-700 hover:shadow-[1px_1px_0_0_#D32F2F,3px_3px_0_0_#D32F2F]"
       >
         {t('common.delete')}
       </Button>

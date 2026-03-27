@@ -3,7 +3,7 @@ import {FC, useEffect, useState} from 'react';
 import type {User, UserRole, UserStatus} from '@/entities/user';
 import {useUsersPaginated} from '@/entities/user';
 import {useI18n} from '@/shared/lib/i18n';
-import {Badge, Input, Modal, Pagination, Select, Table} from '@/shared/ui';
+import {Badge, Button, Input, Modal, Pagination, Select, Table} from '@/shared/ui';
 import {Layout} from '@/widgets/layout';
 import {CreateNeedyForm} from '@/features/needy-create';
 import {CreateVolunteerForm} from '@/features/volunteer-create';
@@ -162,27 +162,27 @@ export const UsersPage: FC = () => {
             <div className="w-full sm:w-auto [&>button]:w-full sm:[&>button]:w-auto">
               <InviteNeedyButton />
             </div>
-              <button
+              <Button
+                  variant={"animate"}
                   onClick={handleExportClick}
-                  className="w-full h-[44px] px-4 rounded-xl sm:w-auto min-h-[44px] sm:min-h-0 shrink-0 border-2 border-[#004573] shadow-[1px_1px_0_0_#004573,3px_3px_0_0_#004573] transition-all duration-150 active:translate-x-[3px] active:translate-y-[3px] active:shadow-none"
                   disabled={isExporting}
               >
                   {isExporting ? t('users.exporting') : t('users.export')}
-              </button>
+              </Button>
 
-              <button
+              <Button
                   onClick={() => setIsCreateVolunteerModalOpen(true)}
-                  className="w-full h-[44px] px-4 rounded-xl sm:w-auto min-h-[44px] sm:min-h-0 shrink-0 border-2 border-[#004573] shadow-[1px_1px_0_0_#004573,3px_3px_0_0_#004573] transition-all duration-150 active:translate-x-[3px] active:translate-y-[3px] active:shadow-none"
+                  variant={"animate"}
               >
                   {t('users.addVolunteer')}
-              </button>
+              </Button>
 
-              <button
+              <Button
                   onClick={() => setIsCreateModalOpen(true)}
-                  className="w-full h-[44px] px-4 rounded-xl sm:w-auto min-h-[44px] sm:min-h-0 shrink-0 border-2 border-[#004573] shadow-[1px_1px_0_0_#004573,3px_3px_0_0_#004573] transition-all duration-150 active:translate-x-[3px] active:translate-y-[3px] active:shadow-none"
+                  variant={"animate"}
               >
                   {t('users.addNeedy')}
-              </button>
+              </Button>
           </div>
         </div>
 
@@ -309,12 +309,12 @@ export const UsersPage: FC = () => {
                           </div>
                           <div className="w-16 h-px bg-gray-100 my-2" />
                           <div className="mt-2 w-full flex flex-col items-center gap-3">
-                              <button
+                              <Button
                                   onClick={() => setSelectedUserId(user.id)}
-                                  className="w-[180px] h-[44px] px-4 rounded-xl sm:w-auto min-h-[44px] sm:min-h-0 shrink-0 border-2 border-[#004573] shadow-[1px_1px_0_0_#004573,3px_3px_0_0_#004573] transition-all duration-150 active:translate-x-[3px] active:translate-y-[3px] active:shadow-none"
+                                  variant={"animate"}
                               >
                                   {t('users.actions.viewDetails')}
-                              </button>
+                              </Button>
 
                               {user.role === 'volunteer' && (
                                   <div className="w-full [&>button]:w-full [&>button]:min-h-[48px] [&>button]:rounded-xl [&>button]:justify-center [&>button]:text-base [&>button]:font-medium">
